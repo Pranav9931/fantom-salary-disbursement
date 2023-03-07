@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Loader, PolygonScan } from '../assets';
+import { FTMScanLogo, Loader } from '../assets';
 import { MilestoneCard, TransactionGraph, Transactions } from '../components';
 import Dashboardcard from '../components/dashboardcard.component';
 import { useStateContext } from '../context';
@@ -27,7 +27,7 @@ const MilestonePage = () => {
     setNavTitle(() => "Milestones");
 
     const handleClick = () => {
-        window.location.href = "https://explorer.testnet.mantle.xyz/address/0xE10488fcd9994E1002f38Ffb1E5cE1392473B77c";
+        window.location.href = "https://testnet.ftmscan.com/address/0xE10488fcd9994E1002f38Ffb1E5cE1392473B77c";
     }
 
     useEffect(() => {
@@ -39,7 +39,8 @@ const MilestonePage = () => {
     useEffect(() => {
         const fetchMilestone = async () => {
             setIsLoading(true);
-            const data = await getMilestones();
+            let data = await getMilestones();
+            data = data.filter((item: any) => item.desc !== "Loan Request")
             setMilestones(() => data);
             setIsLoading(false);
         }
@@ -81,8 +82,10 @@ const MilestonePage = () => {
                 <div className="flex jst-spc-btw al-cnt mr-tp-20">
                     <span className="page-title">Recent Milestone Payments</span>
                     <span style={{ display: 'flex', alignItems: 'center', cursor: "pointer" }} onClick={() => handleClick()}>
-                        <img src={PolygonScan} className="arrow-icon" alt="polygonscan_logo" /></span>
+                        <img src={FTMScanLogo} className="arrow-icon" alt="ftmscan_logo" /></span>
                 </div>
+                <div className="err-text">All recent milestone payments.</div>
+
                 <div className="transactions-details">
                     <Transactions filterType="Milestone Payment" />
                 </div>

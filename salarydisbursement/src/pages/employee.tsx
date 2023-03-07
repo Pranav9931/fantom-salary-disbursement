@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Loader, PolygonScan } from '../assets';
+import { FTMScanLogo, Loader } from '../assets';
 import { Employee, EmployeeCard, Payroll, TransactionGraph, Transactions } from '../components';
 import Dashboardcard from '../components/dashboardcard.component';
 import "./employee.css";
@@ -56,10 +56,12 @@ const EmployeePage = () => {
                 </div>
 
                 <div className="flex jst-spc-btw al-cnt mr-tp-20">
-                    <span className="page-title">Recent Transactions</span>
-                    <span style={{ display: 'flex', alignItems: 'center', cursor: "pointer" }} onClick={() => { }}>
-                        <img src={PolygonScan} className="arrow-icon" alt="polygonscan_logo" /></span>
+                    <span className="page-title">Recent Salary Payments</span>
+                    <span style={{ display: 'flex', alignItems: 'center', cursor: "pointer" }} onClick={() => { window.location.href = "https://testnet.ftmscan.com/address/0xE10488fcd9994E1002f38Ffb1E5cE1392473B77c" }}>
+                        <img src={FTMScanLogo} className="arrow-icon" alt="FTMScan_logo" /></span>
                 </div>
+                <div className="err-text">Salary payment to the employees.</div>
+
                 <div className="transactions-details">
                     <Transactions filterType="Salary" />
                 </div>
@@ -71,11 +73,15 @@ const EmployeePage = () => {
             <div className="dashboard-sidebar">
                 <div className="transactions-graph-container">
                     {/* <span className="sidebar-span">Payroll</span> */}
+                    <span className="sidebar-span">Payroll</span>
+                    <div className="err-text">Pay all employees at once whose vesting period is over.</div>
+
+
                     <Payroll />
                 </div>
                 <div className="transactions-employee-container">
                     <span className="sidebar-span">Employee Data</span>
-
+                    <div className="err-text">The employees' details.</div>
                     <Employee />
 
                 </div>

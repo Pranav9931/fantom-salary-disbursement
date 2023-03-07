@@ -5,13 +5,24 @@ import "./dashboard.css";
 import { useStateContext } from '../context'
 import Dashboardcard from '../components/dashboardcard.component';
 
-import { DevIcon, OperationsIcon, MarketingIcon, BusinessIcon, WalletIcon, RightArrowIcon, Logo, PolygonScan, AccountBG } from '../assets';
-import { Employee, TransactionGraph, Transactions } from '../components';
+import { DevIcon, OperationsIcon, MarketingIcon, BusinessIcon, WalletIcon, RightArrowIcon, Logo, AccountBG, Loader, FTMScanLogo } from '../assets';
+import { Employee, MilestoneCard, TransactionGraph, Transactions } from '../components';
 
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    const [navTitle, setNavTitle, address, contract, connect] = useStateContext();
+    const [
+        navTitle,
+        setNavTitle,
+        address,
+        contract,
+        connect,
+        getTransactions,
+        getEmployees,
+        payrollEmployee,
+        payEmployee,
+        getMilestones
+    ] = useStateContext();
 
     const navigate = useNavigate();
 
@@ -24,8 +35,22 @@ const Dashboard = () => {
     setNavTitle(() => "Dashboard");
 
     const handleClick = () => {
-        window.location.href = "https://explorer.testnet.mantle.xyz/address/0xE10488fcd9994E1002f38Ffb1E5cE1392473B77c";
+        window.location.href = "https://testnet.ftmscan.com/address/0xE10488fcd9994E1002f38Ffb1E5cE1392473B77c";
     }
+
+    const [milestones, setMilestones] = React.useState([] as any);
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    useEffect(() => {
+        const fetchMilestone = async () => {
+            setIsLoading(true);
+            let data = await getMilestones();
+            data = data.filter((item: any) => item.desc === "Loan Request");
+            setMilestones(() => data);
+            setIsLoading(false);
+        }
+        fetchMilestone();
+    }, [address, contract])
 
     return (
         <div className="dashboard-container flex gap-10">
@@ -64,8 +89,10 @@ const Dashboard = () => {
                 <div className="flex jst-spc-btw al-cnt mr-tp-20">
                     <span className="page-title">Recent Transactions</span>
                     <span style={{ display: 'flex', alignItems: 'center', cursor: "pointer" }} onClick={() => handleClick()}>
-                        <img src={PolygonScan} className="arrow-icon" alt="polygonscan_logo" /></span>
+                        <img src={FTMScanLogo} className="arrow-icon" alt="ftmscan_logo" /></span>
                 </div>
+                <div className="err-text">All the recent transactions heppened on the chain.</div>
+
                 <div className="transactions-details">
                     <Transactions filterType="" />
                 </div>
@@ -80,9 +107,29 @@ const Dashboard = () => {
                     <TransactionGraph />
                 </div>
                 <div className="transactions-employee-container">
-                    <span className="sidebar-span">Employee Data</span>
-                    <div className="err-text">Employee details</div>
-                    <Employee />
+                    <span className="sidebar-span">Loan Requests</span>
+                    <div className="err-text">The active loan requests pending to be paid.</div>
+                    <div className="employee-wrapper" style={{ width: "500px" }}>
+                        {isLoading
+                            ?
+                            <center>
+                                <div className="loader-container">
+                                    <img src={Loader} />
+                                </div>
+                            </center>
+                            :
+                            (milestones.length < 1 ?
+                                <div className="no-milestones">No active loan requests at the moment.</div>
+                                :
+                                milestones.map((milestone: any, idx = 0) => {
+                                    return (
+                                        <MilestoneCard obj={milestone} type="loan" />
+                                    )
+                                })
+                            )
+
+                        }
+                    </div>
 
                 </div>
             </div>

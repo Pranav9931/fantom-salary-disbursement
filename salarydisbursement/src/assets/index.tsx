@@ -15,7 +15,7 @@ import WalletIcon from "./WalletIcon.png";
 import RightArrowIcon from "./RightArrowIcon.png";
 import Loader from "./Loading.png";
 import PendingIcon from "./PendingIcon.png";
-import PolygonScan from "./mantle-logo.svg";
+import FTMScanLogo from "./logo-ftmscan.svg";
 import UserAvatar from "./userAvatar.avif";
 import TransactionPlane from "./transaction_plane.png"
 import TransactionDecline from "./transaction_decline.png"
@@ -38,7 +38,7 @@ export {
     RightArrowIcon,
     UserAvatar,
     Loader,
-    PolygonScan,
+    FTMScanLogo,
     TransactionPlane,
     TransactionDecline,
     PendingIcon,

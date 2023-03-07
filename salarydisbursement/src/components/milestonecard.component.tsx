@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PendingIcon } from '../assets';
 import { useStateContext } from '../context';
 
-const MilestoneCard = ({ obj }: any) => {
+const MilestoneCard = ({ obj, type }: any) => {
 
     const [
         navTitle,
@@ -36,7 +36,7 @@ const MilestoneCard = ({ obj }: any) => {
     }
 
     return (
-        <div className="employee-card">
+        <div className="employee-card" style={{ flex: type === "loan" ? 1 : 0 }}>
             <img src={PendingIcon} />
             <div className="employee-details">
                 <div style={{ fontSize: '.9em' }}>
@@ -47,12 +47,15 @@ const MilestoneCard = ({ obj }: any) => {
 
                 </div>
                 <div style={{ fontSize: '.9em' }} className="card-bottom-wrapper">
-                    <div>
-                        <span className="page-title">Department</span>
-                        <div className='detail-box' >
-                            {obj.department}
+                    {type === "loan" ? "" :
+                        <div>
+                            <span className="page-title">Department</span>
+                            <div className='detail-box' >
+                                {obj.department}
+                            </div>
                         </div>
-                    </div>
+                    }
+
                     <div>
                         <span className="page-title">Amount</span>
                         <div className='detail-box' >
@@ -64,7 +67,7 @@ const MilestoneCard = ({ obj }: any) => {
             </div>
             <div className="employee-details-rev">
                 <div style={{ fontSize: '.9em', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <span className="page-title" style={{ alignSelf: 'flex-end' }}>Reason for Milestone</span>
+                    <span className="page-title" style={{ alignSelf: 'flex-end' }}>{type === "loan" ? "" : "Reason for Milestone"}</span>
                     <div className="success" >
                         {obj.desc}
                     </div>
