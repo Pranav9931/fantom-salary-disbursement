@@ -5,7 +5,7 @@
 
 .main-dashboard-items{
     flex: .7;
-    margin-top: 20px;
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
 }
@@ -98,8 +98,9 @@
     border-radius: 30px;
     position: relative;
     cursor: pointer;
-    top: -30px;
+    top: -10px;
     background: #111;
+    margin-bottom: 50px;
 }
 
 .transactions-details + .load-more-btn{
